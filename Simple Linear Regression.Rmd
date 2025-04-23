@@ -1,0 +1,55 @@
+---
+title: "Simple Linear Regression"
+author: "Agbugah Raymond"
+date:   "`r Sys.Date()`"
+---
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+library(DAAG)
+library(dplyr)
+library(ggplot2)
+library(pander)
+library(tidyverse)
+```
+
+```{r,echo=FALSE}
+roller %>% pander(style = "rmarkdown",
+                      caption = "Data on Roller Weight")
+str(roller)
+```
+
+```{r,echo=FALSE}
+roller %>% ggplot(aes(x = weight,y = depression))+
+          geom_point()+
+           geom_smooth(method = "lm",se = 0) +
+           ggtitle("Depression vs Rollers Weight")
+```
+
+From the graph, you observe a linear pattern with some variability around it. Note, intercept is the predicted value of dependent variables when x = 0, it is more useful when x takes value close to zero.
+
+```{r,echo=FALSE}
+m1 <- lm(depression ~ weight,roller)
+summary(m1)
+```
+
+1. Linear Model is 
+1. Y = B0 +B1X +e
+1.where e is the error therefore, the model above is given as
+1. Y = -2.0871 +2.6667weight
+
+The standard error and t-value are summarizing the probability value. t-values are gotten by dividing the estimates with the standard error. In this estimate,8 degrees of freedom is been considered because we are estimating two parameters.
+when roller weight is 0, on an average the depression will be -2.0871.
+
+ depression= -2.0871+2.6667*weight.
+
+Slope is the average change in y when x increases by 1 unit.
+where slope is 2.6667. For every 1 unit increase in roller weight, on an average, depression on grass increases by 2.6667.
+
+Predicting y beyond the range of x is not advisable due to lack of evidence that the relationship between x and y will be linear and this is because regression model is used for estimation and not for prediction.
+
+#       **Hypothesis Testing**
+Ho: Weight is not statistically significant
+H1: Weight is statistically significant
+
+confidence interval = 0.05
+Since the p-value which is 0.00518 is less than 0.05,we accept the alternate hypothesis and conclude that weight is statistically significant. Which means that weight contributes to this model significantly.
